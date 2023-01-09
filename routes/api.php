@@ -19,12 +19,15 @@ use App\Http\Controllers\API\ContactController;
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
-Route::resource('contacts', ContactController::class);
+
+Route::post('contacts/create', [ContactController::class, 'store']);
 
 //Route::get('contacts', [ContactController::class, 'index']);
-//Route::post('contacts/create', [ContactController::class, 'store']);
 //Route::post('contacts/update', [ContactController::class, 'update']);
 
+Route::middleware('auth:sanctum')->group( function () {
+    Route::resource('contacts', ContactController::class);
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
